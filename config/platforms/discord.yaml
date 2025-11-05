@@ -1,0 +1,72 @@
+# Discord Platform Configuration
+platform:
+  name: discord
+  base_url: https://discord.com
+  requires_auth: true
+
+# Credentials (fill in your actual credentials)
+credentials:
+  username: "YOUR_DISCORD_EMAIL@example.com"
+  password: "YOUR_DISCORD_PASSWORD"
+
+# Workflow definitions
+workflows:
+  login:
+    steps:
+      - type: navigate
+        url: https://discord.com/login
+      - type: wait
+        duration: 2000
+      - type: type
+        selector: "input[name='email']"
+        field: username
+      - type: type
+        selector: "input[name='password']"
+        field: password
+      - type: click
+        selector: "button[type='submit']"
+        wait: 3
+  
+  send_message:
+    steps:
+      - type: navigate
+        url: "https://discord.com/channels/{{server_id}}/{{channel_id}}"
+      - type: wait
+        duration: 2000
+      - type: click
+        selector: "div[role='textbox']"
+      - type: type
+        selector: "div[role='textbox']"
+        field: message
+      - type: press_key
+        key: Enter
+  
+  retrieve_messages:
+    steps:
+      - type: navigate
+        url: "https://discord.com/channels/{{server_id}}/{{channel_id}}"
+      - type: wait
+        duration: 3000
+      - type: scroll
+        direction: up
+        amount: 500
+      - type: wait
+        duration: 1000
+      - type: extract
+        selector: "[id^='chat-messages-'] [class*='message']"
+        fields:
+          text: "[class*='messageContent']"
+          author: "[class*='username']"
+          timestamp: "time"
+
+# Selectors (for easier maintenance)
+selectors:
+  login:
+    email_input: "input[name='email']"
+    password_input: "input[name='password']"
+    submit_button: "button[type='submit']"
+  
+  chat:
+    message_input: "div[role='textbox']"
+    send_button: "button[aria-label='Send Message']"
+    message_container: "[id^='chat-messages-']"
