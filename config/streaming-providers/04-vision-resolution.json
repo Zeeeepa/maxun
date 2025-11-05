@@ -1,0 +1,55 @@
+{
+  "_comment": "Vision-Based Error Resolution - See README.md for complete configuration",
+  "version": "1.0",
+  "service_name": "vision-resolution-engine",
+  
+  "vision_models": {
+    "primary": {
+      "provider": "openai",
+      "model": "gpt-4-vision-preview"
+    },
+    "fallback": {
+      "provider": "anthropic",
+      "model": "claude-3-opus-20240229"
+    }
+  },
+  
+  "resolution_strategies": [
+    {
+      "id": "selector-refinement",
+      "priority": 1,
+      "description": "Use vision to identify correct CSS selectors"
+    },
+    {
+      "id": "wait-and-retry",
+      "priority": 2,
+      "description": "Wait for dynamic content and retry"
+    },
+    {
+      "id": "alternative-selectors",
+      "priority": 3,
+      "description": "Find alternative ways to interact"
+    },
+    {
+      "id": "page-state-recovery",
+      "priority": 4,
+      "description": "Recover from unexpected page states"
+    },
+    {
+      "id": "fallback-navigation",
+      "priority": 5,
+      "description": "Navigate through alternative paths"
+    },
+    {
+      "id": "human-intervention-request",
+      "priority": 6,
+      "description": "Request manual assistance",
+      "enabled": false
+    }
+  ],
+  
+  "iterative_resolution_loop": {
+    "enabled": true,
+    "max_iterations": 6
+  }
+}
