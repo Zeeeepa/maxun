@@ -242,13 +242,17 @@ async function streamResponse(
 /**
  * POST /api/v1/chat/completions
  * OpenAI-compatible chat completion endpoint
+ * 
+ * Supports two modes:
+ * 1. Pre-recorded robot mode (model = 'k2think', 'qwen', etc.)
+ * 2. Universal dynamic mode (model = 'universal', requires url/email/password in messages metadata)
  */
 router.post(
   '/v1/chat/completions',
   requireAPIKey,
   async (req: Request, res: Response) => {
     try {
-      const { model, messages, stream = false } = req.body;
+      const { model, messages, stream = false, url, email, password } = req.body;
 
       // Validate request
       if (!model || !messages || !Array.isArray(messages)) {
@@ -440,4 +444,3 @@ router.get('/v1/models', requireAPIKey, async (req: Request, res: Response) => {
 });
 
 export default router;
-
