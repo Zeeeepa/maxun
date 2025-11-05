@@ -38,3 +38,37 @@ AIRTABLE_REDIRECT_URI=http://localhost:8080/auth/airtable/callback
 
 # Telemetry Settings - Please keep it enabled. Keeping it enabled helps us understand how the product is used and assess the impact of any new changes. 
 MAXUN_TELEMETRY=true
+
+# LLM Chat Provider Credentials (Web Login)
+# Credentials for chat providers - encrypted at runtime
+ENCRYPTION_MASTER_KEY=your-32-byte-encryption-key-change-this-in-production
+
+# k2think.ai credentials
+K2THINK_EMAIL=developer@pixelium.uk
+K2THINK_PASSWORD=developer123?
+K2THINK_ROBOT_ID=
+
+# qwen.ai credentials
+QWEN_EMAIL=developer@pixelium.uk
+QWEN_PASSWORD=developer1?
+QWEN_ROBOT_ID=
+
+# deepseek.com credentials
+DEEPSEEK_EMAIL=zeeeepa+1@gmail.com
+DEEPSEEK_PASSWORD=developer123??
+DEEPSEEK_ROBOT_ID=
+
+# grok.com credentials
+GROK_EMAIL=developer@pixelium.uk
+GROK_PASSWORD=developer123??
+GROK_ROBOT_ID=
+
+# z.ai credentials
+ZAI_EMAIL=developer@pixelium.uk
+ZAI_PASSWORD=developer123?
+ZAI_ROBOT_ID=
+
+# mistral.ai credentials
+MISTRAL_EMAIL=developer@pixelium.uk
+MISTRAL_PASSWORD=develooper123?
+MISTRAL_ROBOT_ID=
