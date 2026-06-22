@@ -1,0 +1,16 @@
+{
+  "name": "maxun-chat-automation-examples",
+  "version": "1.0.0",
+  "description": "Chat automation examples for Maxun",
+  "main": "chat_automation_node.js",
+  "scripts": {
+    "start": "node chat_automation_node.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.1"
+  },
+  "keywords": ["maxun", "automation", "chat", "browser"],
+  "author": "Maxun",
+  "license": "AGPLv3"
+}
