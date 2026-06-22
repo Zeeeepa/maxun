@@ -1,0 +1,29 @@
+{
+  "_comment": "Robot Workflow Definitions - See README.md for complete configuration",
+  "version": "1.0",
+  "workflows": [
+    {
+      "id": "chat-message-sender",
+      "name": "Chat Message Sender with Vision Fallback",
+      "entry_point": "POST /v1/robots/chat-message-sender/execute",
+      "parameters": {
+        "required": ["chat_url", "username", "password", "message"]
+      },
+      "vision_fallback": {
+        "enabled": true,
+        "model": "gpt-4-vision-preview",
+        "max_resolution_attempts": 3
+      }
+    },
+    {
+      "id": "chat-message-retriever",
+      "name": "Chat Message Retriever",
+      "entry_point": "POST /v1/robots/chat-message-retriever/execute"
+    },
+    {
+      "id": "multi-chat-orchestrator",
+      "name": "Multi-Chat Orchestrator",
+      "entry_point": "POST /v1/robots/orchestrate"
+    }
+  ]
+}

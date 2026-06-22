@@ -1,0 +1,26 @@
+# OpenAI API Adapter - See README.md for complete configuration
+version: "1.0"
+adapter_name: "openai-compatibility-layer"
+
+request_mapping:
+  chat_completions:
+    openai_endpoint: "/v1/chat/completions"
+    maxun_endpoint: "/v1/robots/{robot_id}/execute"
+
+response_mapping:
+  completion:
+    openai_format:
+      id: "chatcmpl-${execution_id}"
+      object: "chat.completion"
+      model: "maxun-robot-${robot_id}"
+
+models:
+  - id: "maxun-robot-chat-sender"
+    name: "Chat Message Sender"
+    robot_id: "chat-message-sender"
+    capabilities: ["chat", "vision", "error_resolution"]
+  
+  - id: "maxun-robot-chat-retriever"
+    name: "Chat Message Retriever"
+    robot_id: "chat-message-retriever"
+    capabilities: ["chat", "vision", "data_extraction"]

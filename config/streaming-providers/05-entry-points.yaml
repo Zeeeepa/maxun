@@ -1,0 +1,41 @@
+# API Entry Points - See README.md for complete configuration
+version: "1.0"
+service_name: "streaming-api-gateway"
+base_path: "/api/v1"
+
+entry_points:
+  # EP1: OpenAI-Compatible Chat Completions
+  - id: "ep1-chat-completions"
+    path: "/chat/completions"
+    methods: ["POST"]
+    description: "OpenAI-compatible endpoint"
+  
+  # EP2: Direct Robot Execution
+  - id: "ep2-robot-execute"
+    path: "/robots/{robot_id}/execute"
+    methods: ["POST"]
+    description: "Direct robot execution with full parameter control"
+  
+  # EP3: Multi-Robot Orchestration
+  - id: "ep3-orchestrate"
+    path: "/robots/orchestrate"
+    methods: ["POST"]
+    description: "Execute multiple robots in parallel or sequence"
+  
+  # EP4: Vision-Based Analysis
+  - id: "ep4-vision-analyze"
+    path: "/vision/analyze"
+    methods: ["POST"]
+    description: "Analyze screenshots using vision models"
+  
+  # EP5: Execution Status Stream
+  - id: "ep5-execution-stream"
+    path: "/executions/{execution_id}/stream"
+    methods: ["GET"]
+    description: "Connect to execution event stream"
+  
+  # EP6: Batch Operations
+  - id: "ep6-batch-execute"
+    path: "/robots/batch"
+    methods: ["POST"]
+    description: "Execute multiple robot instances"

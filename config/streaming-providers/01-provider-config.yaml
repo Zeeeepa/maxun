@@ -1,0 +1,72 @@
+# Streaming Provider Configuration - OpenAI API Compatible
+# Entry Point 1: Core Provider Configuration
+# ============================================================
+
+version: "1.0"
+provider_name: "maxun-streaming-provider"
+api_version: "v1"
+compatibility: "openai-v1"
+
+endpoints:
+  chat_completions: "/v1/chat/completions"
+  chat_completions_stream: "/v1/chat/completions/stream"
+  vision_analysis: "/v1/vision/analyze"
+  robot_execute: "/v1/robots/{robot_id}/execute"
+  robot_orchestrate: "/v1/robots/orchestrate"
+  health: "/v1/health"
+  status: "/v1/status"
+
+authentication:
+  type: "bearer"
+  header: "Authorization"
+  api_key_header: "X-API-Key"
+  methods:
+    - "bearer_token"
+    - "api_key"
+    - "oauth2"
+
+streaming:
+  enabled: true
+  protocol: "server-sent-events"
+  chunk_size: 1024
+  chunk_delimiter: "\n\n"
+  timeout_seconds: 300
+  keepalive_interval: 15
+  backpressure:
+    enabled: true
+    buffer_size: 10485760
+    strategy: "drop_oldest"
+
+rate_limiting:
+  enabled: true
+  limits:
+    chat_completions:
+      requests_per_minute: 60
+      requests_per_hour: 1000
+      concurrent_requests: 10
+    robot_execute:
+      requests_per_minute: 30
+      requests_per_hour: 500
+      concurrent_requests: 5
+    vision_analysis:
+      requests_per_minute: 20
+      requests_per_hour: 200
+      concurrent_requests: 3
+  burst_multiplier: 1.5
+
+error_resolution:
+  enabled: true
+  vision_analysis:
+    enabled: true
+    model: "gpt-4-vision-preview"
+    max_retries: 3
+    triggers:
+      - "element_not_found"
+      - "selector_invalid"
+      - "interaction_failed"
+      - "timeout"
+      - "unexpected_page_state"
+  iterative_resolution:
+    enabled: true
+    max_iterations: 6
+    convergence_threshold: 0.95

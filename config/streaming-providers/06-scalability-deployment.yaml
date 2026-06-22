@@ -1,0 +1,54 @@
+# Scalability and Deployment - See README.md for complete configuration
+version: "1.0"
+deployment_name: "maxun-streaming-provider"
+
+infrastructure:
+  orchestration:
+    platform: "kubernetes"
+    namespace: "maxun-streaming"
+    
+    services:
+      - name: "api-gateway"
+        replicas: {min: 2, max: 20}
+        resources:
+          requests: {cpu: "500m", memory: "512Mi"}
+          limits: {cpu: "2000m", memory: "2Gi"}
+        autoscaling: {enabled: true, target_cpu: 70}
+      
+      - name: "robot-executor"
+        replicas: {min: 3, max: 30}
+        resources:
+          requests: {cpu: "1000m", memory: "1Gi"}
+          limits: {cpu: "4000m", memory: "4Gi"}
+      
+      - name: "vision-analyzer"
+        replicas: {min: 2, max: 10}
+        resources:
+          requests: {cpu: "2000m", memory: "2Gi"}
+          limits: {cpu: "4000m", memory: "8Gi"}
+
+scalability:
+  horizontal_scaling:
+    enabled: true
+    policies:
+      - {metric: "cpu_utilization", target: 70}
+      - {metric: "memory_utilization", target: 80}
+      - {metric: "execution_queue_length", target: 50}
+  
+  geo_distribution:
+    enabled: true
+    regions:
+      - {name: "us-east-1", primary: true, capacity_weight: 40}
+      - {name: "us-west-2", primary: false, capacity_weight: 30}
+      - {name: "eu-west-1", primary: false, capacity_weight: 20}
+
+high_availability:
+  multi_region: {enabled: true, active_active: true}
+  disaster_recovery:
+    backup: {frequency: "hourly", retention_days: 30}
+    failover: {automatic: true, rto_seconds: 300}
+
+monitoring:
+  metrics: {enabled: true, prometheus: true}
+  logging: {enabled: true, provider: "elasticsearch"}
+  tracing: {enabled: true, provider: "jaeger"}
